@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColladaExporter", "ColladaExporter\ColladaExporter.csproj", "{29AF6FAF-7C0A-4100-BFAA-182C17145758}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29AF6FAF-7C0A-4100-BFAA-182C17145758}.Debug|x86.ActiveCfg = Debug|x86
+		{29AF6FAF-7C0A-4100-BFAA-182C17145758}.Debug|x86.Build.0 = Debug|x86
+		{29AF6FAF-7C0A-4100-BFAA-182C17145758}.Release|x86.ActiveCfg = Release|x86
+		{29AF6FAF-7C0A-4100-BFAA-182C17145758}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ColladaExporter\ColladaExporter.csproj
+	EndGlobalSection
+EndGlobal
