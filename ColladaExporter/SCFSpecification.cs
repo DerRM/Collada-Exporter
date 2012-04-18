@@ -7,7 +7,10 @@ namespace ColladaExporter
 	{
 		public SCFSpecification ()
 		{
+			mMagicNumber = 809911123; // SCF0
 		}
+		
+		public uint mMagicNumber;
 	}
 	
 	public class GeometryLibrary
