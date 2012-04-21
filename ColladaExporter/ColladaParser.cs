@@ -117,9 +117,32 @@ namespace ColladaExporter
 			
 			for (int i = 0; i < VerticeNode.ChildNodes.Count; i++)
 			{
+				for (int j = 0; j < VerticeNode.Attributes.Count; j++)
+				{
+					if (VerticeNode.Attributes[j].Name.Equals("id"))
+					{
+						CurrentVertices.mVerticesId = VerticeNode.Attributes[j].Value.ToString();
+					}
+				}
+				
+				
 				if (VerticeNode.ChildNodes[i].Name.Equals("input"))
 				{
+					Console.WriteLine("Entered InputNode");
+					XmlNode InputNode = VerticeNode.ChildNodes[i];
 					
+					for (int j = 0; j < InputNode.Attributes.Count; j++)
+					{
+						switch(InputNode.Attributes[j].Name)
+						{
+							case "semantic":
+								CurrentVertices.mInputSemantic = InputNode.Attributes[j].Value.ToString();
+								break;
+							case "source":
+								CurrentVertices.mInputSource = InputNode.Attributes[j].Value.ToString().Substring(1);
+								break;
+						}
+					}
 				}
 			}
 			
@@ -134,14 +157,14 @@ namespace ColladaExporter
 			
 			for (int i = 0; i < TrianglesNode.ChildNodes.Count; i++)
 			{
-				if (TrianglesNode.ChildNodes[i].Equals("input"))
+				if (TrianglesNode.ChildNodes[i].Name.Equals("input"))
 				{
-					
+					ParseGeometryLibrary_GeometryMeshTriangles_Input(TrianglesNode.ChildNodes[i], CurrentTriangles);
 				}
 				
-				if (TrianglesNode.ChildNodes[i].Equals("p"))
+				if (TrianglesNode.ChildNodes[i].Name.Equals("p"))
 				{
-					
+					ParseGeometryLibrary_GeometryMeshTriangles_P(TrianglesNode.ChildNodes[i], CurrentTriangles);
 				}
 			}
 			
@@ -243,6 +266,49 @@ namespace ColladaExporter
 			}
 			
 			CurrentSource.mTechniqueCommon = CurrentTechniqueCommon;
+		}
+		
+		public void ParseGeometryLibrary_GeometryMeshTriangles_Input(XmlNode InputNode, Triangles CurrentTriangles)
+		{
+			Console.WriteLine("Entered TrianglesInputNode");
+			TrianglesInput CurrentTrianglesInput = new TrianglesInput();
+			
+			for (int i = 0; i < InputNode.Attributes.Count; i++)
+			{
+				switch(InputNode.Attributes[i].Name)
+				{
+					case "offset":
+						CurrentTrianglesInput.mOffset = uint.Parse(InputNode.Attributes[i].Value);
+						break;
+					case "semantic":
+						CurrentTrianglesInput.mSemantic = InputNode.Attributes[i].Value.ToString();
+						break;
+					case "set":
+						// Ignored
+						break;
+					case "source":
+						CurrentTrianglesInput.mSource = InputNode.Attributes[i].Value.ToString().Substring(1);
+						break;
+				}
+			}
+			
+			CurrentTriangles.mTriangleInputs.Add(CurrentTrianglesInput);
+		}
+		
+		public void ParseGeometryLibrary_GeometryMeshTriangles_P(XmlNode PNode, Triangles CurrentTriangles)
+		{
+			Console.WriteLine("Entered TrianglesPNode");
+			TrianglesP CurrentTrianglesP = new TrianglesP();
+			
+			String PValues = PNode.InnerText;
+			String[] Ps = PValues.Split(" ".ToCharArray());
+			
+			for (int i = 0; i < Ps.Length; i++)
+			{
+				CurrentTrianglesP.mIndices.Add(uint.Parse(Ps[i]));
+			}
+			
+			CurrentTriangles.mTrianglesP = CurrentTrianglesP;
 		}
 	}
 }
