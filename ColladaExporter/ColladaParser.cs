@@ -9,6 +9,17 @@ namespace ColladaExporter
 		public const String LIBRARY_GEOMETRIES = "library_geometries";
 		
 		private GeometryLibrary mGeometryLibrary = new GeometryLibrary();
+		private bool isFinished = false;
+		
+		public GeometryLibrary GeometryLibrary
+		{
+			get { return mGeometryLibrary; }
+		}
+		
+		public bool IsFinished
+		{
+			get { return isFinished; }
+		}
 		
 		public ColladaParser(String path)
 		{	
@@ -28,6 +39,8 @@ namespace ColladaExporter
 					ParseGeometryLibrary(ChildNode);
 				}
 			}
+			
+			isFinished = true;
 		}
 		
 		public void ParseGeometryLibrary(XmlNode GeomNode)
@@ -93,6 +106,16 @@ namespace ColladaExporter
 			
 			Source CurrentSource = new Source();
 			
+			for (int i = 0; i < SourceNode.Attributes.Count; i++)
+			{
+				switch(SourceNode.Attributes[i].Name)
+				{
+					case "id":
+						CurrentSource.mSourceId = SourceNode.Attributes[i].Value.ToString();
+						break;
+				}
+			}
+			
 			for (int i = 0; i < SourceNode.ChildNodes.Count; i++)
 			{
 				if (SourceNode.ChildNodes[i].Name.Equals("float_array"))
@@ -154,6 +177,19 @@ namespace ColladaExporter
 			Console.WriteLine("Entered TrianglesNode");
 			
 			Triangles CurrentTriangles = new Triangles();
+			
+			for (int i = 0; i < TrianglesNode.Attributes.Count; i++)
+			{
+				switch(TrianglesNode.Attributes[i].Name)
+				{
+					case "count":
+						CurrentTriangles.mCount = uint.Parse(TrianglesNode.Attributes[i].Value);
+						break;
+					case "material":
+						CurrentTriangles.mMaterial = TrianglesNode.Attributes[i].Value.ToString();
+						break;
+				}
+			}
 			
 			for (int i = 0; i < TrianglesNode.ChildNodes.Count; i++)
 			{

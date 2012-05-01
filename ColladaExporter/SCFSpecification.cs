@@ -5,12 +5,59 @@ namespace ColladaExporter
 {
 	public class SCFSpecification
 	{
-		public SCFSpecification ()
+		public class SCFMainChunk
 		{
-			mMagicNumber = 809911123; // SCF0
+			public SCFMainChunk()
+			{
+				mVersion = 1;
+				mMagicNumber = 809911123; // SCF0
+				mNoOfSubChunks = 1; // only geometry chunk for now
+				mChunkId = 0;
+			}
+			
+			public uint mVersion;
+			public uint mMagicNumber;
+			public uint mNoOfSubChunks;
+			public uint mChunkId;
 		}
 		
-		public uint mMagicNumber;
+		public class SCFGeometryChunk
+		{
+			public SCFGeometryChunk()
+			{
+				mChunkId = 1;
+				mNoOfTriangleGroups = 0;
+				mTotalNoOfTriangles = 0;
+				mDataOffset = 0;
+			}
+			
+			public uint mChunkId;
+			public uint mNoOfTriangleGroups;
+			public uint mTotalNoOfTriangles;
+			public uint mDataOffset;
+		}
+		
+		public class SCFHeader
+		{
+			public SCFHeader()
+			{
+				mMainChunk = new SCFMainChunk();
+				mGeometryChunk = new SCFGeometryChunk();
+			}
+			
+			public SCFMainChunk mMainChunk;
+			public SCFGeometryChunk mGeometryChunk;
+		}
+		
+		public class SCF
+		{
+			public SCF()
+			{
+				mHeader = new SCFHeader();
+			}
+			
+			public SCFHeader mHeader;
+		}
 	}
 	
 	public class GeometryLibrary
