@@ -94,15 +94,15 @@ namespace ColladaExporter
 			
 			for (int i = 0; i < triangles.mTrianglesP.mIndices.Count; i += increment)
 			{
-				WriteSCF.Write(triangles.mTrianglesP.mIndices[i + (0 * increment1)]);
-				WriteSCF.Write(triangles.mTrianglesP.mIndices[i + (1 * increment1)]);
-				WriteSCF.Write(triangles.mTrianglesP.mIndices[i + (2 * increment1)]);
+				WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + (0 * increment1)]);
+				WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + (1 * increment1)]);
+				WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + (2 * increment1)]);
 				
 				if (triangles.mTriangleInputs.Count > 1)
 				{
-					WriteSCF.Write(triangles.mTrianglesP.mIndices[i + 1 + (0 * increment1)]);
-					WriteSCF.Write(triangles.mTrianglesP.mIndices[i + 1 + (1 * increment1)]);
-					WriteSCF.Write(triangles.mTrianglesP.mIndices[i + 1 + (2 * increment1)]);
+					WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + 1 + (0 * increment1)]);
+					WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + 1 + (1 * increment1)]);
+					WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + 1 + (2 * increment1)]);
 				}
 			}
 		}
