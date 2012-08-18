@@ -2,30 +2,16 @@ using System;
 using System.Xml;
 using System.IO;
 
-namespace ColladaExporter
+namespace ColladaExporter.Parsing
 {
-	public class ColladaParser
+	public class ColladaParser : Parser
 	{
 		public const String LIBRARY_GEOMETRIES = "library_geometries";
 		
-		private GeometryLibrary mGeometryLibrary = new GeometryLibrary();
-		private bool isFinished = false;
-		
-		public GeometryLibrary GeometryLibrary
-		{
-			get { return mGeometryLibrary; }
-		}
-		
-		public bool IsFinished
-		{
-			get { return isFinished; }
-		}
-		
 		public ColladaParser(String path)
 		{	
-			
 			XmlDocument xmlDoc = new XmlDocument();
-			xmlDoc.Load("/Users/christophersierigk/Downloads/Astro/astroBoy_walk_Max.DAE");
+			xmlDoc.Load(path);
 			
 			XmlElement RootElement = xmlDoc.DocumentElement;
 			

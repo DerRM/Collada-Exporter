@@ -1,16 +1,31 @@
 using System;
+using System.IO;
+using ColladaExporter.Parsing;
 
 namespace ColladaExporter
 {
 	public class ExportSCF
 	{
-		private ColladaParser mParser;
+		private Parser mParser;
 		private GeometryLibrary mGeometryLibrary;
 		
 		public ExportSCF (String path, String dest)
 		{
-			mParser = new ColladaParser(path);
-			
+			string e = Path.GetExtension(path).ToLower();
+
+			switch(e) {
+			case ".dae":
+				mParser = new ColladaParser(path);
+				break;
+			case ".obj":
+				mParser = new ObjParser(path);
+				break;
+			default:
+				Console.WriteLine("I don't know what that is");
+				return;
+				//break;
+			}
+
 			if (mParser.IsFinished)
 			{
 				mGeometryLibrary = mParser.GeometryLibrary;
