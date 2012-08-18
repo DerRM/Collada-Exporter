@@ -7,7 +7,7 @@ namespace ColladaExporter
 		private ColladaParser mParser;
 		private GeometryLibrary mGeometryLibrary;
 		
-		public ExportSCF (String path)
+		public ExportSCF (String path, String dest)
 		{
 			mParser = new ColladaParser(path);
 			
@@ -15,8 +15,16 @@ namespace ColladaExporter
 			{
 				mGeometryLibrary = mParser.GeometryLibrary;
 			}
-			
-			WriteSCF.OpenFile("/Users/christophersierigk/Desktop/Test.scf");
+
+			if (dest.Equals(""))
+			{
+				WriteSCF.OpenFile("/Users/christophersierigk/Desktop/Test.scf");
+			}
+			else
+			{
+				WriteSCF.OpenFile(dest);
+			}
+
 			WriteSCFData();
 			WriteSCF.CloseFile();
 		}
@@ -82,6 +90,18 @@ namespace ColladaExporter
 						WriteSCF.Write(mesh.mSources[i].mFloatArray.mFloats[j]);
 					}
 				}
+
+				if (i == 2) 
+				{
+					Console.WriteLine(mesh.mSources[i].mSourceId + " Entered");
+					WriteSCF.Write(mesh.mSources[i].mFloatArray.mCount / 3);
+
+					for (int j = 0; j < mesh.mSources[i].mFloatArray.mCount; j += 3)
+					{
+						WriteSCF.Write(mesh.mSources[i].mFloatArray.mFloats[j]);
+						WriteSCF.Write(mesh.mSources[i].mFloatArray.mFloats[j + 1]);
+					}
+				}
 			}
 		}
 		
@@ -103,6 +123,13 @@ namespace ColladaExporter
 					WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + 1 + (0 * increment1)]);
 					WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + 1 + (1 * increment1)]);
 					WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + 1 + (2 * increment1)]);
+				}
+
+				if (triangles.mTriangleInputs.Count > 2)
+				{
+					WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + 2 + (0 * increment1)]);
+					WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + 2 + (1 * increment1)]);
+					WriteSCF.Write((ushort)triangles.mTrianglesP.mIndices[i + 2 + (2 * increment1)]);
 				}
 			}
 		}
