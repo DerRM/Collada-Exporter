@@ -46,7 +46,8 @@ namespace ColladaExporter
 		
 		public static void Write(String buffer)
 		{
-			mBinaryWriter.Write(buffer);
+			mBinaryWriter.Write(buffer.ToCharArray());
+			mBinaryWriter.Write('\0');
 		}
 		
 		public static void CloseFile()

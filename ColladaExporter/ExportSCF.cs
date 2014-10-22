@@ -8,10 +8,17 @@ namespace ColladaExporter
 	{
 		private Parser mParser;
 		private GeometryLibrary mGeometryLibrary;
-		
+		private String debugOutput;
+
+		public String DebugOutput
+		{
+			get { return debugOutput; }
+		}
+
 		public ExportSCF (String path, String dest)
 		{
 			string e = Path.GetExtension(path).ToLower();
+			debugOutput = "";
 
 			switch(e) {
 			case ".dae":
@@ -21,7 +28,7 @@ namespace ColladaExporter
 				mParser = new ObjParser(path);
 				break;
 			default:
-				Console.WriteLine("I don't know what that is");
+				debugOutput += "I don't know what that is\n";
 				return;
 				//break;
 			}
@@ -33,7 +40,7 @@ namespace ColladaExporter
 
 			if (dest.Equals(""))
 			{
-				WriteSCF.OpenFile("/Users/christophersierigk/Desktop/Test.scf");
+				WriteSCF.OpenFile("/Users/derrm/Desktop/Test.scf");
 			}
 			else
 			{
@@ -55,7 +62,7 @@ namespace ColladaExporter
 			
 			for (int i = 0; i < mesh.mTriangles.Count; i++)
 			{
-				Console.WriteLine("TriangleGroup " + i);
+				debugOutput += "TriangleGroup " + i + "\n";
 				SCFFile.mHeader.mGeometryChunk.mTotalNoOfTriangles += mesh.mTriangles[i].mCount;
 			}
 			
@@ -97,7 +104,7 @@ namespace ColladaExporter
 			{
 				if (i != 2)
 				{
-					Console.WriteLine(mesh.mSources[i].mSourceId + " Entered");
+					debugOutput += mesh.mSources[i].mSourceId + " Entered\n";
 					WriteSCF.Write(mesh.mSources[i].mFloatArray.mCount);
 					
 					for (int j = 0; j < mesh.mSources[i].mFloatArray.mCount; j++)
@@ -108,7 +115,7 @@ namespace ColladaExporter
 
 				if (i == 2) 
 				{
-					Console.WriteLine(mesh.mSources[i].mSourceId + " Entered");
+					debugOutput += mesh.mSources[i].mSourceId + " Entered\n";
 					WriteSCF.Write(mesh.mSources[i].mFloatArray.mCount / 3);
 
 					for (int j = 0; j < mesh.mSources[i].mFloatArray.mCount; j += 3)

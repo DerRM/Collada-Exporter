@@ -51,9 +51,10 @@ namespace ColladaExporter
 		partial void exportFile (MonoMac.AppKit.NSButton sender)
 		{
 			
-			new ExportSCF(txt_input.StringValue, txt_output.StringValue);
+			var scfExport = new ExportSCF(txt_input.StringValue, txt_output.StringValue);
 			NSTextView txt = (NSTextView) txt_fld_output.DocumentView;
 			//txt.TextStorage.Append(new NSAttributedString(parser.GetParseOutput()));
+			txt.TextStorage.Append(new NSAttributedString(scfExport.DebugOutput));
 		}
 	}
 }
